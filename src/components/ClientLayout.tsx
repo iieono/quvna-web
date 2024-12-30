@@ -15,17 +15,18 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const text = "Quvna";
+  const pathname = usePathname();
   useEffect(() => {
-    // Check if 'window' is defined (client-side environment)
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        router.push("/login");
+    if (pathname !== "/") {
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          router.push("/login");
+        }
       }
     }
   }, [router]);
-  const text = "Quvna";
-  const pathname = usePathname();
   let isLoginOrRegister = pathname === "/login" || pathname === "/register";
   let isMain =
     pathname === "/login" || pathname === "/register" || pathname === "/";

@@ -11,7 +11,15 @@ export default function Home() {
     const timeline = gsap.timeline({
       onComplete: () => {
         gsap.delayedCall(1, () => {
-          router.push("/home");
+          // Check if 'window' is defined (client-side environment)
+          if (typeof window !== "undefined") {
+            const token = localStorage.getItem("token");
+            if (!token) {
+              router.push("/login");
+            } else {
+              router.push("/home");
+            }
+          }
         });
       },
     });
