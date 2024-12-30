@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useLoginMutation } from "../../features/authApi"; // Assuming you have the useLoginMutation hook from your authApi file
+import { useLoginMutation } from "../../features/authApi";
 import { useRouter } from "next/navigation";
 import { TextMorph } from "@/components/ui/text-morph";
 
@@ -10,8 +10,11 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [login, { isLoading, isError }] = useLoginMutation();
+  const [isClient, setIsClient] = useState(false);
 
+  // Ensure the component is rendered client-side before accessing localStorage
   useEffect(() => {
+    setIsClient(true);
     const token = localStorage.getItem("token");
     if (token) {
       router.push("/"); // Redirect if token exists
@@ -22,7 +25,6 @@ function LoginPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Remove spaces before submitting
     const phoneNumberWithoutSpaces = phoneNumber.replace(/\s+/g, "");
 
     // Regex to validate Uzbek phone numbers
@@ -86,6 +88,11 @@ function LoginPage() {
     setPhoneNumber(formattedInput.trim());
     setErrorMessage(""); // Clear error on change
   };
+
+  // Prevent rendering localStorage logic until client-side
+  if (!isClient) {
+    return null; // Or a loading spinner
+  }
 
   return (
     <div className="w-full h-full flex items-center justify-center">
