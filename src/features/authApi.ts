@@ -1,23 +1,30 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+const getToken = (): string | null => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token");
+  }
+  return null;
+};
 
 export const authApi = createApi({
-  reducerPath: 'authApi',
+  reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://quvna.dominantsoftdevelopment.uz/', // Replace with your actual API base URL
+    baseUrl: "https://quvna.dominantsoftdevelopment.uz/", // Replace with your actual API base URL
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem('token');
+      const token = getToken();
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
-      headers.set('Content-Type', 'application/json');
+      headers.set("Content-Type", "application/json");
       return headers;
     },
   }),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (credentials) => ({
-        url: '/api/auth/login', // Endpoint for login
-        method: 'POST',
+        url: "/api/auth/login", // Endpoint for login
+        method: "POST",
         body: {
           phoneNumber: credentials.phoneNumber,
           password: credentials.password,
@@ -26,8 +33,8 @@ export const authApi = createApi({
     }),
     register: builder.mutation({
       query: (userInfo) => ({
-        url: '/api/auth/register', // Updated the endpoint path for registration
-        method: 'POST',
+        url: "/api/auth/register", // Updated the endpoint path for registration
+        method: "POST",
         body: {
           phoneNumber: userInfo.phoneNumber,
           email: userInfo.email,
@@ -44,4 +51,5 @@ export const authApi = createApi({
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetUserQuery, getUserProfile, useGetUserProfileQuery } = authApi;
+export const { useLoginMutation, useRegisterMutation, useGetUserProfileQuery } =
+  authApi;
