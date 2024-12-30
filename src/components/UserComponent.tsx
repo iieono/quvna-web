@@ -116,7 +116,7 @@ function UserComponent() {
                       .replace(/,/g, " ") || 0}
                   </p>
                   <Image
-                    src="/images/diamond-icon.png" // Use user image or fallback image
+                    src="/images/ml-icon.png" // Use user image or fallback image
                     alt="uc icon" // Descriptive alt text
                     width={24} // Set the width of the image
                     height={24} // Set the height of the image

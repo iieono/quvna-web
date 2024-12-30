@@ -1,12 +1,26 @@
 import React, { useState } from "react";
-import Image from "next/image"; // Import the Image component
-import { TransitionPanel } from "./ui/transition-panel"; // Make sure this is imported
+import Image from "next/image";
+import { TransitionPanel } from "./ui/transition-panel";
 import {
   useGetFiftyAllMLQuery,
   useGetFiftyAllSteamQuery,
   useGetFiftyAllUcQuery,
 } from "@/features/ratingApi";
-import { Spotlight } from "./ui/spotlight";
+
+interface RatingItem {
+  image?: string;
+  playName?: string;
+  gameID?: string;
+  ucAmount?: number;
+  steamName?: string;
+  steamAmount?: number;
+  mobileLegendsName?: string;
+  mlamount?: number;
+}
+
+interface RatingData {
+  data: RatingItem[];
+}
 
 export function RatingsTransitionPage() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -15,150 +29,93 @@ export function RatingsTransitionPage() {
     data: ucData,
     isLoading: ucLoading,
     error: ucError,
-  } = useGetFiftyAllUcQuery();
+  } = useGetFiftyAllUcQuery(undefined);
   const {
     data: steamData,
     isLoading: steamLoading,
     error: steamError,
-  } = useGetFiftyAllSteamQuery();
+  } = useGetFiftyAllSteamQuery(undefined);
   const {
     data: mlData,
     isLoading: mlLoading,
     error: mlError,
-  } = useGetFiftyAllMLQuery();
-  //   console.log(ucData?.data);
-  //   console.log(steamData?.data);
-  //   console.log(mlData?.data);
+  } = useGetFiftyAllMLQuery(undefined);
+
+  const renderContent = (
+    data: RatingData | undefined,
+    loading: boolean,
+    error: any,
+    type: "uc" | "steam" | "ml"
+  ) => {
+    if (loading) return "Loading...";
+    if (error) return `Error: ${error.message}`;
+    if (!data || !data.data) return "No data available";
+
+    return data.data.map((item, index) => (
+      <div key={index} className="flex items-center space-x-2 mb-4">
+        <Image
+          src={item.image || `/images/${type}-icon.png`}
+          alt={`${type.toUpperCase()} Rating for ${
+            item.playName || item.steamName || item.mobileLegendsName
+          }`}
+          width={40}
+          height={40}
+          className="rounded-full"
+        />
+        <div className="flex justify-between items-start w-full">
+          <div className="flex flex-col">
+            <p className="font-medium text-primary-text">
+              {item.playName ||
+                item.steamName ||
+                item.mobileLegendsName ||
+                "Not found"}
+            </p>
+            {type === "uc" && (
+              <p className="text-xs text-secondary-text">
+                UID: {item.gameID || "Not found"}
+              </p>
+            )}
+          </div>
+          <div className="flex items-center">
+            <p className="text-base text-reward-yellow">
+              {(
+                (type === "uc"
+                  ? item.ucAmount
+                  : type === "steam"
+                  ? item.steamAmount
+                  : item.mlamount) || 0
+              )
+                .toLocaleString("en", { useGrouping: true })
+                .replace(/,/g, " ")}
+            </p>
+            <Image
+              src={`/images/${type}-icon.png`}
+              alt={`${type} icon`}
+              width={type === "uc" ? 40 : 20}
+              height={type === "uc" ? 40 : 20}
+              className="rounded-full"
+            />
+          </div>
+        </div>
+      </div>
+    ));
+  };
 
   const ITEMS = [
     {
-      image: "/images/pubg-icon.png", // Image for UC Ratings
+      image: "/images/pubg-icon.png",
       subtitle: "UC Ratings",
-      content: ucLoading
-        ? "Loading..."
-        : ucError
-        ? `Error: ${ucError.message}`
-        : ucData
-        ? ucData.data.map((item, index) => (
-            <div key={index} className="flex items-center space-x-2 mb-4">
-              <Image
-                src={item.image || "/images/pubg-icon.png"} // Use user image or fallback image
-                alt={`UC Rating for ${item.playName}`} // Descriptive alt text
-                width={40} // Set the width of the image
-                height={40} // Set the height of the image
-                className="rounded-full"
-              />
-              <div className="flex justify-between items-start w-full">
-                <div className="flex flex-col">
-                  <p className="font-medium text text-primary-text">
-                    {item.playName || "Not found"}
-                  </p>
-                  <p className="text-xs text-secondary-text ">
-                    UID: {item.gameID || "Not found"}
-                  </p>
-                </div>
-                <div className="flex  items-center">
-                  <p className="text-base text-reward-yellow">
-                    {item.ucAmount
-                      .toLocaleString("en", { useGrouping: true })
-                      .replace(/,/g, " ") || 0}
-                  </p>
-                  <Image
-                    src="/images/uc-icon.png" // Use user image or fallback image
-                    alt="uc icon" // Descriptive alt text
-                    width={40} // Set the width of the image
-                    height={40} // Set the height of the image
-                    className="rounded-full"
-                  />
-                </div>
-              </div>
-            </div>
-          ))
-        : "No data available",
+      content: renderContent(ucData, ucLoading, ucError, "uc"),
     },
     {
-      image: "/images/steam-icon.png", // Image for Steam Ratings
+      image: "/images/steam-icon.png",
       subtitle: "Steam Ratings",
-      content: steamLoading
-        ? "Loading..."
-        : steamError
-        ? `Error: ${steamError.message}`
-        : steamData
-        ? steamData.data.map((item, index) => (
-            <div key={index} className="flex items-center space-x-2 mb-4">
-              <Image
-                src={item.image || "/images/steam-icon.png"} // Use user image or fallback image
-                alt={`Steam Rating for ${item.steamName}`} // Descriptive alt text
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-              <div className="flex justify-between items-center w-full">
-                <div>
-                  <p className="font-medium text-primary-text">
-                    {item.steamName || "Not found"}
-                  </p>
-                </div>
-                <div className="flex gap-1 items-center">
-                  <p className="text-base -mb-1 text-reward-yellow">
-                    {item.steamAmount
-                      .toLocaleString("en", { useGrouping: true })
-                      .replace(/,/g, " ") || 0}
-                  </p>
-                  <Image
-                    src={"/images/steam-icon.png"} // Use user image or fallback image
-                    alt={`Steam Rating for ${item.name}`} // Descriptive alt text
-                    width={20}
-                    height={20}
-                    className="rounded-full"
-                  />
-                </div>
-              </div>
-            </div>
-          ))
-        : "No data available",
+      content: renderContent(steamData, steamLoading, steamError, "steam"),
     },
     {
-      image: "/images/diamond-icon.png", // Image for ML Ratings
+      image: "/images/diamond-icon.png",
       subtitle: "ML Ratings",
-      content: mlLoading
-        ? "Loading..."
-        : mlError
-        ? `Error: ${mlError.message}`
-        : mlData
-        ? mlData.data.map((item, index) => (
-            <div key={index} className="flex items-center space-x-2 mb-4">
-              <Image
-                src={item.image || "/images/diamond-icon.png"} // Use user image or fallback image
-                alt={`ML Rating for ${item.mobileLegendsName}`} // Descriptive alt text
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-              <div className="flex w-full items-center justify-between">
-                <div>
-                  <p className="font-medium text-primary-text">
-                    {item.mobileLegendsName || "Not found"}
-                  </p>
-                </div>
-                <div className="flex gap-1 items-center">
-                  <p className="text-base text-reward-yellow">
-                    {item.mlamount
-                      .toLocaleString("en", { useGrouping: true })
-                      .replace(/,/g, " ") || 0}
-                  </p>
-                  <Image
-                    src={"/images/diamond-icon.png"} // Use user image or fallback image
-                    alt={`ML Rating for ${item.mobileLegendsName}`} // Descriptive alt text
-                    width={20}
-                    height={20}
-                    className="rounded-full"
-                  />
-                </div>
-              </div>
-            </div>
-          ))
-        : "No data available",
+      content: renderContent(mlData, mlLoading, mlError, "ml"),
     },
   ];
 
@@ -175,9 +132,9 @@ export function RatingsTransitionPage() {
           >
             <Image
               src={item.image}
-              alt={`Icon for ${item.subtitle}`} // Descriptive alt text for the icon
-              width={32} // Width of the icon
-              height={32} // Height of the icon
+              alt={`Icon for ${item.subtitle}`}
+              width={32}
+              height={32}
             />
           </button>
         ))}
