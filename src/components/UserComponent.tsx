@@ -9,7 +9,7 @@ import CartComponent from "./CartComponent";
 
 function UserComponent() {
   const [activeIndex, setActiveIndex] = useState(1);
-  const userId = localStorage.getItem("userId"); // Assuming the user ID is stored in localStorage
+  const userId = window?.localStorage.getItem("userId"); // Assuming the user ID is stored in window?.localStorage
   const { data, error, isLoading } = useGetUserProfileQuery(userId);
   const contentUrl = data?.data?.attachmentResponseDTO?.contentUrl;
   const imageUrl = contentUrl

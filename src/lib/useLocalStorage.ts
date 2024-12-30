@@ -1,21 +1,21 @@
-// utils/useLocalStorage.ts
+// utils/usewindow?.localStorage.ts
 import { useState } from "react";
 
 type SetValue<T> = (value: T | ((prevState: T) => T)) => void;
 
-export function useLocalStorage<T>(
+export function usewindow?.localStorage<T>(
   key: string,
   initialValue: T
 ): [T, SetValue<T>] {
   if (typeof window === "undefined") {
-    // Return the initial value if on the server (no localStorage in SSR)
+    // Return the initial value if on the server (no window?.localStorage in SSR)
     return [initialValue, () => {}];
   }
 
-  // If window is defined, use localStorage in the browser
+  // If window is defined, use window?.localStorage in the browser
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
-      const item = window.localStorage.getItem(key);
+      const item = window.window?.localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
       console.warn(error);
@@ -28,7 +28,7 @@ export function useLocalStorage<T>(
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      window.window?.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
       console.warn(error);
     }

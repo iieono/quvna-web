@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const getToken = (): string | null => {
   if (typeof window !== "undefined") {
-    return localStorage.getItem("token");
+    return window?.localStorage.getItem("token");
   }
   return null;
 };
