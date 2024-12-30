@@ -1,7 +1,8 @@
+"use client";
 import { useGetUserProfileQuery } from "@/features/authApi";
 import { Bell, Globe, Settings, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextShimmer } from "./ui/text-shimmer";
 import Link from "next/link";
 import RatingComponent from "./RatingComponent";
@@ -9,8 +10,20 @@ import CartComponent from "./CartComponent";
 
 function UserComponent() {
   const [activeIndex, setActiveIndex] = useState(1);
-  const userId = window?.localStorage.getItem("userId"); // Assuming the user ID is stored in window?.localStorage
-  const { data, error, isLoading } = useGetUserProfileQuery(userId);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Ensure this code only runs in the client-side (browser)
+    if (typeof window !== "undefined") {
+      const storedUserId = window.localStorage.getItem("userId");
+      setUserId(storedUserId);
+    }
+  }, []);
+
+  const { data, error, isLoading } = useGetUserProfileQuery(userId, {
+    skip: !userId, // Skip the query if userId is not yet set
+  });
+
   const contentUrl = data?.data?.attachmentResponseDTO?.contentUrl;
   const imageUrl = contentUrl
     ? `https://quvna.dominantsoftdevelopment.uz/${contentUrl}`

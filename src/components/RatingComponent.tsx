@@ -113,7 +113,7 @@ export function RatingsTransitionPage() {
       content: renderContent(steamData, steamLoading, steamError, "steam"),
     },
     {
-      image: "/images/diamond-icon.png",
+      image: "/images/ml-icon.png",
       subtitle: "ML Ratings",
       content: renderContent(mlData, mlLoading, mlError, "ml"),
     },
