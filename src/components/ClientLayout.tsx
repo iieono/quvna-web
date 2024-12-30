@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Bell, Globe } from "lucide-react";
 import { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
@@ -14,6 +14,16 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  useEffect(() => {
+    // Check if 'window' is defined (client-side environment)
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        router.push("/login");
+      }
+    }
+  }, [router]);
   const text = "Quvna";
   const pathname = usePathname();
   let isLoginOrRegister = pathname === "/login" || pathname === "/register";
