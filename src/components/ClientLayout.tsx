@@ -18,7 +18,7 @@ export default function ClientLayout({
   const text = "Quvna";
   const pathname = usePathname();
   useEffect(() => {
-    if (pathname !== "/") {
+    if (pathname !== "/" && pathname !== "/register") {
       if (typeof window !== "undefined") {
         const token = localStorage.getItem("token");
         if (!token) {
