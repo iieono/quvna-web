@@ -51,7 +51,7 @@ function LoginPage() {
     }
   };
 
-  const handlePhoneNumberChange = (e) => {
+  const handlePhoneNumberChange = (e: any) => {
     let input = e.target.value;
 
     // Remove any non-numeric characters except for the "+" sign
