@@ -48,8 +48,8 @@ function UserComponent() {
           >
             <Image src={imageUrl} width={70} height={70} alt="Image" />
           </Link>
-          {/* <div className="absolute left-5 top-20 pt-2">
-            <Settings size={28} />
+          {/* <div className="absolute -top-1 -left-[5rem] border-4 border-white/0 rounded-tr-3xl rounded-bl-3xl p-[1.45rem]  z-20 text-white">
+            <Settings className="hover:rotate-180 duration-500 ease-custom-ease" />
           </div> */}
           <div className="flex flex-col gap-8">
             <div className=" flex gap-5 items-center justify-between">

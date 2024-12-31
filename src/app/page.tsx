@@ -62,7 +62,7 @@ export default function Home() {
   return (
     <div className="rounded-xl relative overflow-hidden h-full w-full flex flex-col bg-white text-white items-center justify-center p-8">
       <div className="loading-bg rounded-tl-[2000px]  rounded-tr-[2000px] translate-y-full h-full w-full bg-primary-bg absolute"></div>
-      <div className="loading-text font-clash-display gap-1 absolute font-bold tracking-loose text-9xl text-white flex">
+      <div className="loading-text font-clash-display gap-1 absolute font-bold tracking-loose text-6xl lg:text-9xl text-white flex">
         {text.split("").map((letter, index) => (
           <span
             key={index}
