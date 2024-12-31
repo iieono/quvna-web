@@ -2,11 +2,12 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 export default function Home() {
   const router = useRouter();
 
-  useEffect(() => {
+  useGSAP(() => {
     // Animate the background
     const timeline = gsap.timeline({
       onComplete: () => {
