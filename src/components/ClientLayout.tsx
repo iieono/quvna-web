@@ -54,7 +54,10 @@ export default function ClientLayout({
     <Provider store={store}>
       <body className="min-h-screen h-screen flex justify-between bg-white p-1 text-primary-text gap-1">
         {!isMain && (
-          <div className="brand-text text-4xl cursor-pointer bg-white rounded-br-3xl  text-black font-semibold font-clash-display top-1 left-1 px-5 pr-6 py-1 absolute ">
+          <Link
+            href="/home"
+            className="brand-text text-4xl cursor-pointer bg-white rounded-br-3xl  text-black font-semibold font-clash-display top-1 left-1 px-7 pr-6 py-1 absolute "
+          >
             {text.split("").map((letter, index) => (
               <span
                 key={index}
@@ -98,10 +101,10 @@ export default function ClientLayout({
             <div className="h-10 w-10 bg-white absolute -right-10 top-0">
               <div className="absolute h-full w-full bg-primary-bg rounded-tl-3xl"></div>
             </div>
-          </div>
+          </Link>
         )}
         {!isLoginOrRegister && (
-          <div className="brand-text text-base cursor-pointer bg-white rounded-tr-3xl  text-black font-semibold font-clash-display bottom-1 left-1 px-5 pr-6 py-2 absolute ">
+          <div className="brand-text text-base cursor-pointer bg-white rounded-tr-3xl  text-black font-semibold font-clash-display bottom-1 left-1 px-3 pl-4 py-2 absolute ">
             <div className="flex gap-3">
               <Link
                 href="https://www.instagram.com/quvna_game"

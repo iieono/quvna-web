@@ -29,7 +29,7 @@ function UserComponent() {
     ? `https://quvna.dominantsoftdevelopment.uz/${contentUrl}`
     : "/images/default-user.png";
 
-  console.log(data);
+  // console.log(data);
   return (
     <div className="flex flex-col relative h-full max-h-full w-[35%] gap-1">
       <div className=" relative bg-primary-bg p-5 pt-3 rounded-3xl h-2/3 flex flex-col justify-start">

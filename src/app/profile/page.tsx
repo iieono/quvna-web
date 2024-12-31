@@ -1,6 +1,7 @@
 "use client";
 import { BorderTrail } from "@/components/ui/border-trail";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -52,9 +53,12 @@ function Page() {
             <div></div>
 
             <div className="flex gap-3">
-              <div className="px-5 py-2 font-semibold bg-white/10 rounded-lg text-secondary-text">
+              <Link
+                href="https://t.me/Quvna_Support"
+                className="px-5 py-2 font-semibold bg-white/10 rounded-lg text-secondary-text"
+              >
                 Help
-              </div>
+              </Link>
               <div
                 className="cursor-pointer px-5 py-2 font-semibold bg-white/10 rounded-lg text-primary-text"
                 onClick={logoutHandle}
@@ -84,15 +88,16 @@ function Page() {
                 />
               </div>
               <input
+                id="profile-picture"
                 name="profile-picture"
                 type="file"
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                className="absolute  inset-0 w-full h-full opacity-0 cursor-pointer"
                 aria-label="Upload file"
                 onChange={handleFileChange}
               />
               <label
                 htmlFor="profile-picture"
-                className="relative inset-0 p-[2.9rem] h-full w-full border rounded-xl border-dashed flex items-center justify-center text-primary-text"
+                className="relative cursor-pointer inset-0 p-[2.9rem] h-full w-full border rounded-xl border-dashed flex items-center justify-center text-primary-text"
               >
                 <span>Upload a file</span>
               </label>
