@@ -188,16 +188,16 @@ function Page() {
   }
 
   return (
-    <div className="page-container">
-      <div className="w-full h-full flex justify-center items-center">
-        <div className="flex flex-col w-2/3 rounded-3xl gap-3 p-3">
+    <div className="w-full h-full overflow bg-primary-bg px-2 pt-28 lg:pt-10">
+      <div className="w-full h-full flex justify-center items-center pt-64 lg:pt-0  overflow-scroll">
+        <div className="flex flex-col w-full text-sm lg:w-2/3 rounded-3xl gap-3 p-3">
           <div className="rounded-xl gap-3 flex w-full justify-between">
             <div className="flex">
               <Link
                 href="/history"
-                className="px-5 py-2 flex gap-2 font-semibold bg-white/10 rounded-lg text-secondary-text"
+                className="lg:px-5 lg:py-2 px-3 py-1 flex items-center gap-2 font-semibold bg-white/10 rounded-lg text-secondary-text"
               >
-                <FileClock />
+                <FileClock className="hidden lg:flex" />
                 Orders
               </Link>
             </div>
@@ -206,7 +206,7 @@ function Page() {
                 href="https://t.me/Quvna_Support"
                 className="px-5 py-2 flex gap-2 font-semibold bg-white/10 rounded-lg text-secondary-text"
               >
-                <CircleHelp />
+                <CircleHelp className="hidden lg:flex" />
                 Help
               </Link>
               <div
@@ -220,12 +220,12 @@ function Page() {
 
           <div className="flex flex-col rounded-xl p-3 bg-white/10">
             <div className="flex h-full gap-3 w-full relative rounded-xl">
-              <div className=" min-w-[120px] min-h-[160px] max-w-[120px] max-h-[120px] rounded-3xl overflow-hidden relative">
+              <div className=" min-w-[60px] min-h-[60px] max-w-[60px] max-h-[60px] lg:min-w-[120px] lg:min-h-[120px] lg:max-w-[120px] lg:max-h-[120px] rounded-3xl overflow-hidden relative">
                 <Image
                   src={imageBlobUrl}
                   alt="User Icon"
-                  width={60}
-                  height={20}
+                  width={120}
+                  height={120}
                   style={{
                     objectFit: "cover",
                     objectPosition: "center",
@@ -250,14 +250,14 @@ function Page() {
               />
               <label
                 htmlFor="profile-picture"
-                className="relative cursor-pointer inset-0 p-[2.9rem] h-full w-full border rounded-xl border-dashed flex items-center justify-center text-primary-text"
+                className="relative cursor-pointer inset-0 p-4 lg:p-[2.9rem] h-full w-full border rounded-xl border-dashed flex items-center justify-center text-primary-text"
               >
                 <span>Upload a file</span>
               </label>
             </div>
           </div>
 
-          <div className="flex justify-between gap-3">
+          <div className="flex flex-col lg:flex-row justify-between gap-3">
             <div className="flex gap-3 flex-col w-full rounded-xl p-3 bg-white/10">
               <label htmlFor="name">Name</label>
               <input
@@ -281,7 +281,7 @@ function Page() {
               />
             </div>
           </div>
-          <div className="flex justify-between gap-3 bg-white/10 rounded-xl ">
+          <div className="flex flex-col lg:flex-row justify-between lg:gap-3 bg-white/10 rounded-xl ">
             <div className="flex gap-3 flex-col w-full rounded-xl p-3 ">
               <label htmlFor="pubg-uid">PUBG UID</label>
               <input
@@ -305,7 +305,7 @@ function Page() {
               />
             </div>
           </div>
-          <div className="flex justify-between gap-3">
+          <div className="flex flex-col lg:flex-row justify-between gap-3">
             <div className="flex gap-3 flex-col w-full rounded-xl p-3 bg-white/10">
               <label htmlFor="steam-name">STEAM name</label>
               <input
@@ -332,7 +332,15 @@ function Page() {
             </div>
           </div>
 
-          <div className="rounded-xl gap-3 flex w-full justify-between">
+          <div className="rounded-xl gap-20 lg:gap-3 flex flex-col lg:flex-row w-full justify-between">
+            <div>
+              <div
+                className="px-5 py-3 lg:py-2 text-center font-semibold bg-white/10 rounded-lg text-primary-text"
+                onClick={handleSave}
+              >
+                Save
+              </div>
+            </div>
             <div className="flex gap-3">
               <div className="px-5 py-2 font-semibold bg-white/10 rounded-lg text-secondary-text">
                 Change Password
@@ -342,7 +350,7 @@ function Page() {
                 onOpenChange={setShowDeleteDialog}
               >
                 <AlertDialogTrigger asChild>
-                  <div className="px-5 py-2 font-semibold bg-white rounded-lg text-red-500 cursor-pointer">
+                  <div className="px-5 py-2 text-sm font-semibold bg-white rounded-lg text-red-500 cursor-pointer">
                     Delete Account
                   </div>
                 </AlertDialogTrigger>
@@ -364,14 +372,6 @@ function Page() {
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
-            </div>
-            <div>
-              <div
-                className="px-5 py-2 font-semibold bg-white/10 rounded-lg text-primary-text"
-                onClick={handleSave}
-              >
-                Save
-              </div>
             </div>
           </div>
         </div>

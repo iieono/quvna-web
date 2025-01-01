@@ -91,7 +91,7 @@ function CheckPage() {
     );
 
   return (
-    <div className="bg-primary-bg p-10 w-full h-full py-20">
+    <div className="bg-primary-bg p-2 lg:p-10 w-full h-full text-sm py-24">
       <Tabs
         defaultValue="UC"
         className="w-full overflow-hidden max-w-4xl mx-auto"
@@ -100,7 +100,7 @@ function CheckPage() {
           <TabsTrigger
             value="UC"
             className={cn(
-              "rounded-lg transition text-base",
+              "rounded-lg transition text-xs lg:text-base",
               "data-[state=active]:bg-white"
             )}
           >
@@ -109,7 +109,7 @@ function CheckPage() {
           <TabsTrigger
             value="STEAM"
             className={cn(
-              "rounded-lg transition text-base",
+              "rounded-lg transition text-xs lg:text-base",
               "data-[state=active]:bg-white"
             )}
           >
@@ -118,7 +118,7 @@ function CheckPage() {
           <TabsTrigger
             value="MOBILE_LEGENDS"
             className={cn(
-              "rounded-lg transition text-base",
+              "rounded-lg transition text-xs lg:text-base",
               "data-[state=active]:bg-white"
             )}
           >
@@ -127,7 +127,7 @@ function CheckPage() {
           <TabsTrigger
             value="PRODUCT"
             className={cn(
-              "rounded-lg transition text-base",
+              "rounded-lg transition text-xs lg:text-base",
               "data-[state=active]:bg-white"
             )}
           >
