@@ -2,19 +2,30 @@
 import { BorderTrail } from "@/components/ui/border-trail";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog"; // Adjust the import path to match your setup
+import { useDeleteUserAccountMutation } from "@/features/authApi";
 
 function Page() {
   const router = useRouter();
   const [image, setImage] = useState<string | null>(null);
+  const [deleteUserAccount] = useDeleteUserAccountMutation();
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        // Assert the type of reader.result to be string or null
         setImage(reader.result as string | null);
       };
       reader.readAsDataURL(file);
@@ -27,7 +38,6 @@ function Page() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        // Assert the type of reader.result to be string or null
         setImage(reader.result as string | null);
       };
       reader.readAsDataURL(file);
@@ -37,11 +47,28 @@ function Page() {
   const handleDragOver = (event: any) => {
     event.preventDefault();
   };
+
   const logoutHandle = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
       localStorage.removeItem("id");
       router.push("/");
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      const userId = localStorage.getItem("id");
+      if (!userId) throw new Error("User ID not found");
+
+      await deleteUserAccount(userId).unwrap();
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
+      router.push("/");
+    } catch (error) {
+      console.error("Error deleting account:", error);
+    } finally {
+      setShowDeleteDialog(false);
     }
   };
 
@@ -51,7 +78,6 @@ function Page() {
         <div className="flex flex-col w-2/3 rounded-3xl gap-3 p-3">
           <div className="rounded-xl gap-3 flex w-full justify-between">
             <div></div>
-
             <div className="flex gap-3">
               <Link
                 href="https://t.me/Quvna_Support"
@@ -80,10 +106,10 @@ function Page() {
                   width={120}
                   height={120}
                   style={{
-                    objectFit: "cover", // Ensures the image covers the area
-                    objectPosition: "center", // Centers the image
-                    width: "100%", // Make sure the image fills the container
-                    height: "100%", // Make sure the image fills the container
+                    objectFit: "cover",
+                    objectPosition: "center",
+                    width: "100%",
+                    height: "100%",
                   }}
                 />
               </div>
@@ -91,7 +117,7 @@ function Page() {
                 id="profile-picture"
                 name="profile-picture"
                 type="file"
-                className="absolute  inset-0 w-full h-full opacity-0 cursor-pointer"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 aria-label="Upload file"
                 onChange={handleFileChange}
               />
@@ -126,9 +152,33 @@ function Page() {
               <div className="px-5 py-2 font-semibold bg-white/10 rounded-lg text-secondary-text">
                 Change Password
               </div>
-              <div className="px-5 py-2 font-semibold bg-white rounded-lg text-red-500">
-                Delete Account
-              </div>
+              <AlertDialog
+                open={showDeleteDialog}
+                onOpenChange={setShowDeleteDialog}
+              >
+                <AlertDialogTrigger asChild>
+                  <div className="px-5 py-2 font-semibold bg-white rounded-lg text-red-500 cursor-pointer">
+                    Delete Account
+                  </div>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader className="text-red-500 font-bold text-lg">
+                    Confirm Deletion
+                  </AlertDialogHeader>
+                  <p className="text-secondary-bg">
+                    Are you sure you want to delete your account? This action
+                    cannot be undone.
+                  </p>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="text-secondary-bg">
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDeleteAccount}>
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
             <div></div>
           </div>

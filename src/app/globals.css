@@ -17,7 +17,7 @@ body {
 }
 
 .page-container {
-  @apply bg-primary-bg h-full w-full p-10
+  @apply bg-primary-bg h-full w-full p-10;
 }
 
 @layer base {
@@ -85,7 +85,7 @@ body {
   }
 }
 .login-bg {
-  background: url('../../public//images/login-bg-2.jpg');
+  background: url("../../public//images/login-bg-2.jpg");
   background-size: cover;
   background-position: center;
 }

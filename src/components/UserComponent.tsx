@@ -66,7 +66,7 @@ function UserComponent() {
                   className="font-mono text-base font-medium [--base-color:white] [--base-gradient-color:#2d3e50]"
                   duration={2}
                 >
-                  Rating 2 ★
+                  {`Rating ${data?.data?.rating?.id?.toString()} ★`}
                 </TextShimmer>
               </div>
             </div>

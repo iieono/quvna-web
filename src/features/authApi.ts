@@ -47,9 +47,20 @@ export const authApi = createApi({
     getUserProfile: builder.query({
       query: (userId) => `/user/profile/${userId}`, // New route for getting user profile
     }),
+    deleteUserAccount: builder.mutation({
+      query: (id) => ({
+        url: `/user/${id}/delete-account`, // DELETE account endpoint
+        method: "DELETE",
+      }),
+    }),
+
     // Add additional endpoints here when you provide them
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetUserProfileQuery } =
-  authApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useGetUserProfileQuery,
+  useDeleteUserAccountMutation,
+} = authApi;
