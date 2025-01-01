@@ -7,13 +7,17 @@ import { TextShimmer } from "./ui/text-shimmer";
 import Link from "next/link";
 import RatingComponent from "./RatingComponent";
 import CartComponent from "./CartComponent";
+import { useGetAttachmentQuery } from "@/features/ratingApi";
 
 function UserComponent() {
   const [activeIndex, setActiveIndex] = useState(1);
   const [userId, setUserId] = useState<string | null>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageBlobUrl, setImageBlobUrl] = useState<string>(
+    "/images/default-user.png"
+  );
 
   useEffect(() => {
-    // Ensure this code only runs in the client-side (browser)
     if (typeof window !== "undefined") {
       const storedUserId = window.localStorage.getItem("userId");
       setUserId(storedUserId);
@@ -21,38 +25,72 @@ function UserComponent() {
   }, []);
 
   const { data, error, isLoading } = useGetUserProfileQuery(userId, {
-    skip: !userId, // Skip the query if userId is not yet set
+    skip: !userId,
   });
 
-  const contentUrl = data?.data?.attachmentResponseDTO?.contentUrl;
-  const imageUrl = contentUrl
-    ? `https://quvna.dominantsoftdevelopment.uz/${contentUrl}`
-    : "/images/default-user.png";
+  const attachmentId = data?.data?.attachmentResponseDTO?.id;
+  const { data: attachmentImage, isLoading: isLoadingImage } =
+    useGetAttachmentQuery(attachmentId, {
+      skip: !attachmentId,
+    });
 
-  // console.log(data);
+  // Handle inline image response
+  useEffect(() => {
+    if (attachmentImage) {
+      // Create a blob URL directly from the attachment image
+      const blobUrl = URL.createObjectURL(attachmentImage);
+      setImageBlobUrl(blobUrl);
+      setImageLoaded(true);
+
+      // Cleanup the URL when the component unmounts
+      return () => {
+        if (blobUrl.startsWith("blob:")) {
+          URL.revokeObjectURL(blobUrl);
+        }
+      };
+    }
+  }, [attachmentImage]);
+
+  const handleImageError = () => {
+    setImageBlobUrl("/images/default-user.png");
+    setImageLoaded(true);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="animate-pulse">
+        <div className="w-[70px] h-[70px] bg-gray-200 rounded-tl-3xl rounded-br-3xl"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="text-red-500">Error loading profile data</div>;
+  }
+
   return (
     <div className="flex flex-col relative h-full max-h-full w-[35%] gap-1">
-      <div className=" relative bg-primary-bg p-5 pt-3 rounded-3xl h-2/3 flex flex-col justify-start">
-        {/* <div className="absolute -right-1 -top-0 flex text-2xl items-center self-end text-accent-blue rounded-bl-3xl bg-white gap-2 p-3 ">
-          <div className="bg-accent-blue flex items-center justify-center rounded-full h-8 w-8">
-            <Bell strokeWidth={1.5} className="text-white" />
-          </div>
-          <div className="bg-accent-blue flex items-center justify-center rounded-full h-8 w-8">
-            <Globe strokeWidth={1.5} className="text-white" />
-          </div>
-        </div> */}
+      <div className="relative bg-primary-bg p-5 pt-3 rounded-3xl h-2/3 flex flex-col justify-start">
         <div>
           <Link
             href="/profile"
             className="rounded-tl-3xl rounded-br-3xl absolute -left-1 -top-1 border-4 border-white overflow-hidden"
           >
-            <Image src={imageUrl} width={70} height={70} alt="Image" />
+            <div className="relative w-[70px] h-[70px]">
+              <Image
+                src={imageBlobUrl}
+                fill
+                alt="User profile image"
+                className={`object-cover transition-opacity duration-300 ${
+                  imageLoaded ? "opacity-100" : "opacity-0"
+                }`}
+                onError={handleImageError}
+                unoptimized
+              />
+            </div>
           </Link>
-          {/* <div className="absolute -top-1 -left-[5rem] border-4 border-white/0 rounded-tr-3xl rounded-bl-3xl p-[1.45rem]  z-20 text-white">
-            <Settings className="hover:rotate-180 duration-500 ease-custom-ease" />
-          </div> */}
           <div className="flex flex-col gap-8">
-            <div className=" flex gap-5 items-center justify-between">
+            <div className="flex gap-5 items-center justify-between">
               <div className="ml-16 pl-2">
                 <p className="font-medium text-xl">
                   {data?.data?.firstName || "User"}
@@ -61,7 +99,7 @@ function UserComponent() {
                   ID: {data?.data?.id.toString().padStart(8, "0")}
                 </p>
               </div>
-              <div className="rounded-lg flex font-medium gap-2 text-center items-center  text-sm text-white px-5 py-1 bg-reward-yellow">
+              <div className="rounded-lg flex font-medium gap-2 text-center items-center text-sm text-white px-5 py-1 bg-reward-yellow">
                 <TextShimmer
                   className="font-mono text-base font-medium [--base-color:white] [--base-gradient-color:#2d3e50]"
                   duration={2}
@@ -70,6 +108,7 @@ function UserComponent() {
                 </TextShimmer>
               </div>
             </div>
+
             <div className="flex flex-col gap-2">
               <div className="flex justify-between gap-1 h-16 items-center bg-white/10 rounded-lg text-primary-bg p-2 pl-4">
                 <div>
@@ -87,11 +126,12 @@ function UserComponent() {
                       .replace(/,/g, " ") || 0}
                   </p>
                   <Image
-                    src="/images/uc-icon.png" // Use user image or fallback image
-                    alt="uc icon" // Descriptive alt text
-                    width={40} // Set the width of the image
-                    height={40} // Set the height of the image
+                    src="/images/uc-icon.png"
+                    alt="UC icon"
+                    width={40}
+                    height={40}
                     className="rounded-full"
+                    unoptimized
                   />
                 </div>
               </div>
@@ -108,11 +148,12 @@ function UserComponent() {
                       .replace(/,/g, " ") || 0}
                   </p>
                   <Image
-                    src="/images/steam-icon.png" // Use user image or fallback image
-                    alt="uc icon" // Descriptive alt text
-                    width={24} // Set the width of the image
-                    height={24} // Set the height of the image
+                    src="/images/steam-icon.png"
+                    alt="Steam icon"
+                    width={24}
+                    height={24}
                     className="rounded-full"
+                    unoptimized
                   />
                 </div>
               </div>
@@ -129,11 +170,12 @@ function UserComponent() {
                       .replace(/,/g, " ") || 0}
                   </p>
                   <Image
-                    src="/images/ml-icon.png" // Use user image or fallback image
-                    alt="uc icon" // Descriptive alt text
-                    width={24} // Set the width of the image
-                    height={24} // Set the height of the image
+                    src="/images/ml-icon.png"
+                    alt="ML icon"
+                    width={24}
+                    height={24}
                     className="rounded-full"
+                    unoptimized
                   />
                 </div>
               </div>
@@ -142,30 +184,9 @@ function UserComponent() {
         </div>
       </div>
 
-      <div className="h-full w-full relative ">
-        <div className="flex absolute left-1/2  -translate-x-1/2 -translate-y-12 border-b-none  gap-2 items-center justify-center mt-1">
-          <div
-            className={` rounded-t-3xl flex justify-center items-center gap-1 transition-all duration-300 w-32 py-2 px-6 text-center font-medium cursor-pointer ${
-              activeIndex == 1
-                ? "bg-primary-bg border-4 border-b-0 text-primary-text"
-                : "bg-white border-4 border-b-0 border-white text-primary-bg"
-            }`}
-            onClick={() => setActiveIndex(1)}
-          >
-            <Star size={16} className="transition-all duration-100" />
-            <p className="transition-all duration-100">Rating</p>
-          </div>
-          <div
-            className={` rounded-t-3xl flex justify-center items-center gap-1 w-32 transition-all duration-300 py-2 px-6 text-center font-medium cursor-pointer ${
-              activeIndex == 0
-                ? "bg-primary-bg border-4 border-b-0 text-primary-text"
-                : "bg-white border-4 border-b-0 border-white text-primary-bg"
-            }`}
-            onClick={() => setActiveIndex(0)}
-          >
-            <ShoppingCart size={16} className="transition-all duration-100" />
-            <p className="transition-all duration-100">Cart</p>
-          </div>
+      <div className="h-full w-full relative">
+        <div className="flex absolute left-1/2 -translate-x-1/2 -translate-y-12 border-b-none gap-2 items-center justify-center mt-1">
+          {/* Tabs and other UI elements */}
         </div>
         {activeIndex === 1 ? <RatingComponent /> : <CartComponent />}
       </div>

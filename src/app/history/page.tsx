@@ -64,7 +64,7 @@ function CheckPage() {
   );
 
   if (UCLoading || STEAMLoading || MLLoading || ProductLoading) {
-    return <div>Loading...</div>;
+    return <div className="page-container">Loading...</div>;
   }
 
   if (UCErrors || STEAMErrors || MLErrors || ProductErrors) {

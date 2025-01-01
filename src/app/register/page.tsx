@@ -11,16 +11,13 @@ function RegisterPage() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState(""); // Combined name state
+  const [firstName, setFirstName] = useState(""); // First name state
+  const [lastName, setLastName] = useState(""); // Last name state
   const [errorMessage, setErrorMessage] = useState("");
   const [register, { isLoading, isError, error }] = useRegisterMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const [firstName, lastName] = fullName.split(" "); // Split fullName into first and last names
-    // Ensure lastName is not empty if only a first name is provided
-    const finalLastName = lastName || ""; // Empty string if no last name is provided
 
     const phoneNumberWithoutSpaces = phoneNumber.replace(/\s+/g, "");
     const uzbekPhoneRegex = /^(\+998)(90|91|93|94|95|97|98|99|33|88)\d{7}$/;
@@ -42,7 +39,7 @@ function RegisterPage() {
         email,
         password,
         firstName,
-        lastName: finalLastName,
+        lastName,
       }).unwrap();
       if (data) {
         // Redirect after successful registration
@@ -140,17 +137,32 @@ function RegisterPage() {
             />
           </div>
 
-          {/* Full Name */}
+          {/* First Name */}
           <div className="mb-4 w-full lg:w-2/3">
             <label className="block text-sm font-semibold text-secondary-text">
-              Full Name
+              First Name
             </label>
             <input
               type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               className="w-full p-3 border text-primary-bg outline-none rounded-md text-sm mt-2"
-              placeholder="John Doe"
+              placeholder="John"
+              required
+            />
+          </div>
+
+          {/* Last Name */}
+          <div className="mb-4 w-full lg:w-2/3">
+            <label className="block text-sm font-semibold text-secondary-text">
+              Last Name
+            </label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="w-full p-3 border text-primary-bg outline-none rounded-md text-sm mt-2"
+              placeholder="Doe"
               required
             />
           </div>

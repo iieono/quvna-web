@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react";
 import {
   Card,
   CardContent,
@@ -16,6 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useGetAttachmentQuery } from "@/features/ratingApi";
 
 interface Product {
   productName: string;
@@ -39,7 +40,6 @@ interface Order {
 }
 
 function ProductOrderCard({ order }: { order: Order }) {
-  // Calculate total product count
   const totalProductCount = order.productResponseDTOS?.reduce(
     (acc, product) => acc + product.amount,
     0
@@ -76,14 +76,14 @@ function ProductOrderCard({ order }: { order: Order }) {
           <strong>BTS Address:</strong> {order.btsAddress || "N/A"}
         </div>
 
-        {/* Button to open dialog */}
+        {/* Dialog for product details */}
         <Dialog>
           <DialogTrigger asChild>
-            <p className="= cursor-pointer hover:text-white text-secondary-text underline underline-offset-4">
+            <p className="cursor-pointer hover:text-white text-secondary-text underline underline-offset-4">
               View Product Details
             </p>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
+          <DialogContent className="sm:max-w-[500px] max-h-[80vh] overflow-y-auto">
             <DialogHeader className="sticky top-0 bg-white text-primary-bg z-10">
               <DialogTitle>Product Details</DialogTitle>
               <DialogDescription>
@@ -92,33 +92,73 @@ function ProductOrderCard({ order }: { order: Order }) {
             </DialogHeader>
             <div className="space-y-4 overflow-y-auto text-primary-bg">
               {order.productResponseDTOS.map((product, index) => (
-                <div key={index} className="space-y-2">
-                  <div>
-                    <strong>Product Name:</strong>{" "}
-                    {product.productName || "N/A"}
-                  </div>
-                  <div>
-                    <strong>Description:</strong>{" "}
-                    {product.description || "No description"}
-                  </div>
-                  <div>
-                    <strong>Amount:</strong> {product.amount || 0}
-                  </div>
-                  <div>
-                    <strong>Price:</strong> {product.bonus || 0}{" "}
-                    {order.payType || ""}
-                  </div>
-                  {product.attachmentIds?.length > 0 && (
+                <Card
+                  key={index}
+                  className="border border-secondary-text bg-white/5 shadow-md"
+                >
+                  <CardHeader>
+                    <CardTitle>
+                      {product.productName || "Unnamed Product"}
+                    </CardTitle>
+                    <CardDescription>
+                      {product.description || "No description"}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
                     <div>
-                      <strong>Attachment:</strong>{" "}
-                      <img
-                        src={`/profile/${order.fullName}/${product.attachmentIds[0]}.jpg`}
-                        alt="Product Attachment"
-                        className="w-32 h-32 object-cover"
-                      />
+                      <strong>Amount:</strong> {product.amount || 0}
                     </div>
-                  )}
-                </div>
+                    <div>
+                      <strong>Price:</strong> {product.bonus || 0}{" "}
+                      {order.payType || ""}
+                    </div>
+                    {product.attachmentIds?.length > 0 && (
+                      <div>
+                        <strong>Attachments:</strong>
+                        <div className="flex space-x-4">
+                          {product.attachmentIds.map((id) => {
+                            const { data: imageBlob, isLoading } =
+                              useGetAttachmentQuery(id.toString(), {
+                                skip: !id,
+                              });
+
+                            const imageUrl = React.useMemo(() => {
+                              if (!imageBlob)
+                                return "/images/default-product.png";
+                              return URL.createObjectURL(imageBlob as Blob);
+                            }, [imageBlob]);
+
+                            React.useEffect(() => {
+                              return () => {
+                                if (imageUrl.startsWith("blob:")) {
+                                  URL.revokeObjectURL(imageUrl);
+                                }
+                              };
+                            }, [imageUrl]);
+
+                            return isLoading ? (
+                              <div
+                                key={id}
+                                className="w-32 h-32 bg-gray-200 animate-pulse rounded-lg"
+                              />
+                            ) : (
+                              <img
+                                key={id}
+                                src={imageUrl}
+                                alt="Product Attachment"
+                                className="w-32 h-32 object-cover rounded-lg"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src =
+                                    "/images/default-product.png";
+                                }}
+                              />
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
               ))}
             </div>
             <DialogFooter>

@@ -61,6 +61,30 @@ export const authApi = createApi({
         method: "GET",
       }),
     }),
+    editUserProfile: builder.mutation({
+      query: ({
+        userId,
+        firstName,
+        lastName,
+        gameID,
+        playName,
+        steamName,
+        mobileLegendsName,
+        attachmentId,
+      }) => ({
+        url: `/user/edit/${userId}`, // Edit user profile endpoint
+        method: "PATCH", // Use PATCH method for partial updates
+        body: {
+          firstName,
+          lastName,
+          gameID,
+          playName,
+          steamName,
+          mobileLegendsName,
+          attachmentId,
+        },
+      }),
+    }),
     // Add additional endpoints here when you provide them
   }),
 });
@@ -71,4 +95,5 @@ export const {
   useGetUserProfileQuery,
   useDeleteUserAccountMutation,
   useSendSmsQuery,
+  useEditUserProfileMutation,
 } = authApi;

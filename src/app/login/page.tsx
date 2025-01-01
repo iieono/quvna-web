@@ -141,12 +141,12 @@ function LoginPage() {
             Quvna
           </TextShimmer>
         </div>
-        <h2 className="text-start w-full lg:w-2/3 text-4xl font-bold text-primary-bg mb-4">
+        {/* <h2 className="text-start w-full lg:w-2/3 text-4xl font-bold text-primary-bg mb-4">
           Hello again!
         </h2>
         <p className="text-secondary-text w-full lg:w-2/3 mb-5">
           Log in to access your account and continue where you left off.
-        </p>
+        </p> */}
 
         <form
           onSubmit={handleSubmit}

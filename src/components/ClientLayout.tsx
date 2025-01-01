@@ -67,7 +67,7 @@ export default function ClientLayout({
                 {letter}
               </span>
             ))}
-            <div className=" links-to-social absolute top-3 group gap-0 hover:gap-2 transition-all duration-300 flex flex-col  -right-12 z-20 text-white">
+            {/* <div className=" links-to-social absolute top-3 group gap-0 hover:gap-2 transition-all duration-300 flex flex-col  -right-12 z-20 text-white">
               <div
                 className={`overflow-hidden ${
                   language != "uz" ? "max-h-0" : ""
@@ -94,7 +94,7 @@ export default function ClientLayout({
                   height={30}
                 />
               </div>
-            </div>
+            </div> */}
 
             <div className="h-10 w-10 bg-white absolute -bottom-10 left-0">
               <div className="absolute h-full w-full bg-primary-bg rounded-tl-3xl"></div>
