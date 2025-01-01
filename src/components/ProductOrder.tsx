@@ -46,7 +46,7 @@ function ProductOrderCard({ order }: { order: Order }) {
   );
 
   return (
-    <Card className="mb-2 bg-white/10 border-none text-primary-text">
+    <Card className="mb-2 bg-white/10 text border-none text-primary-text">
       <CardHeader>
         <CardTitle className="flex justify-between">
           <span>Total Products: {totalProductCount || "N/A"}</span>
@@ -83,8 +83,8 @@ function ProductOrderCard({ order }: { order: Order }) {
               View Product Details
             </p>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[500px] max-h-[80vh] overflow-y-auto">
-            <DialogHeader className="sticky top-0 bg-white text-primary-bg z-10">
+          <DialogContent className="max-w-[90%] rounded-lg p-2 py-5 sm:max-w-[500px] max-h-[80vh] overflow-y-auto">
+            <DialogHeader className="  top-0 bg-white text-primary-bg z-10">
               <DialogTitle>Product Details</DialogTitle>
               <DialogDescription>
                 Below are the details for the products in this order.
@@ -161,11 +161,6 @@ function ProductOrderCard({ order }: { order: Order }) {
                 </Card>
               ))}
             </div>
-            <DialogFooter>
-              <Button variant="outline" className="text-primary-bg">
-                Close
-              </Button>
-            </DialogFooter>
           </DialogContent>
         </Dialog>
       </CardContent>
