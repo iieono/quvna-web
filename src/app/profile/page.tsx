@@ -220,12 +220,12 @@ function Page() {
 
           <div className="flex flex-col rounded-xl p-3 bg-white/10">
             <div className="flex h-full gap-3 w-full relative rounded-xl">
-              <div className=" min-w-[120px] min-h-[120px] max-w-[120px] max-h-[120px] rounded-3xl overflow-hidden relative">
+              <div className=" min-w-[120px] min-h-[160px] max-w-[120px] max-h-[120px] rounded-3xl overflow-hidden relative">
                 <Image
                   src={imageBlobUrl}
                   alt="User Icon"
-                  width={120}
-                  height={120}
+                  width={60}
+                  height={20}
                   style={{
                     objectFit: "cover",
                     objectPosition: "center",

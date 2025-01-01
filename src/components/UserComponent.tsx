@@ -69,7 +69,7 @@ function UserComponent() {
   }
 
   return (
-    <div className="flex flex-col relative h-full max-h-full w-[35%] gap-1">
+    <div className=" hidden lg:flex flex-col relative h-full max-h-full w-[35%] gap-1">
       <div className="relative bg-primary-bg p-5 pt-3 rounded-3xl h-2/3 flex flex-col justify-start">
         <div>
           <Link

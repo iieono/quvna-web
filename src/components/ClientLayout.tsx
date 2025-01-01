@@ -105,7 +105,7 @@ export default function ClientLayout({
           </Link>
         )}
         {!isLoginOrRegister && (
-          <div className="brand-text text-base cursor-pointer bg-white rounded-tr-3xl  text-black font-semibold font-clash-display bottom-1 left-1 px-3 pl-4 py-2 absolute ">
+          <div className="hidden lg:flex brand-text text-base cursor-pointer bg-white rounded-tr-3xl  text-black font-semibold font-clash-display bottom-1 left-1 px-3 pl-4 py-2 absolute ">
             <div className="flex gap-3">
               <Link
                 href="https://www.instagram.com/quvna_game"
