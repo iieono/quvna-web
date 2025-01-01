@@ -53,7 +53,14 @@ export const authApi = createApi({
         method: "DELETE",
       }),
     }),
-
+    sendSms: builder.query({
+      query: ({ phoneNumber, isForgot }) => ({
+        url: `/api/auth/sms?phoneNumber=${encodeURIComponent(
+          phoneNumber
+        )}&isForgot=${isForgot}`,
+        method: "GET",
+      }),
+    }),
     // Add additional endpoints here when you provide them
   }),
 });
@@ -63,4 +70,5 @@ export const {
   useRegisterMutation,
   useGetUserProfileQuery,
   useDeleteUserAccountMutation,
+  useSendSmsQuery,
 } = authApi;

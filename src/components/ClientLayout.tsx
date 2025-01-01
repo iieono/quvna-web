@@ -10,6 +10,7 @@ import { store } from "../store";
 import UserComponent from "./UserComponent";
 import Link from "next/link";
 import Image from "next/image";
+import { Toaster } from "./ui/toaster";
 
 export default function ClientLayout({
   children,
@@ -135,6 +136,7 @@ export default function ClientLayout({
         )}
         <div className="w-full rounded-3xl overflow-hidden">{children}</div>
         {!isMain && <UserComponent />}
+        <Toaster />
       </body>
     </Provider>
   );

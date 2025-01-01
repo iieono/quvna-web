@@ -51,14 +51,14 @@ function Page() {
   const logoutHandle = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
-      localStorage.removeItem("id");
+      localStorage.removeItem("userId");
       router.push("/");
     }
   };
 
   const handleDeleteAccount = async () => {
     try {
-      const userId = localStorage.getItem("id");
+      const userId = localStorage.getItem("userId");
       if (!userId) throw new Error("User ID not found");
 
       await deleteUserAccount(userId).unwrap();

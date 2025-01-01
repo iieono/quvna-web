@@ -11,6 +11,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import UCOrderCard from "@/components/UcOrderCard";
+import SteamOrderCard from "@/components/SteamOrderCard";
+import MobileLegendsOrderCard from "@/components/MLOrderCard";
+import ProductOrderCard from "@/components/ProductOrder";
 
 function CheckPage() {
   const [userId, setUserId] = useState<string | null>(null);
@@ -87,13 +91,16 @@ function CheckPage() {
     );
 
   return (
-    <div className="bg-primary-bg p-10 w-full h-full pt-20">
-      <Tabs defaultValue="UC" className="w-full max-w-4xl mx-auto">
+    <div className="bg-primary-bg p-10 w-full h-full py-20">
+      <Tabs
+        defaultValue="UC"
+        className="w-full overflow-hidden max-w-4xl mx-auto"
+      >
         <TabsList className="grid grid-cols-4 h-full text-xl bg-white/10 text-secondary-text gap-2">
           <TabsTrigger
             value="UC"
             className={cn(
-              " rounded-lg transition text-base",
+              "rounded-lg transition text-base",
               "data-[state=active]:bg-white"
             )}
           >
@@ -102,7 +109,7 @@ function CheckPage() {
           <TabsTrigger
             value="STEAM"
             className={cn(
-              " rounded-lg transition text-base",
+              "rounded-lg transition text-base",
               "data-[state=active]:bg-white"
             )}
           >
@@ -111,7 +118,7 @@ function CheckPage() {
           <TabsTrigger
             value="MOBILE_LEGENDS"
             className={cn(
-              " rounded-lg transition text-base",
+              "rounded-lg transition text-base",
               "data-[state=active]:bg-white"
             )}
           >
@@ -120,7 +127,7 @@ function CheckPage() {
           <TabsTrigger
             value="PRODUCT"
             className={cn(
-              " rounded-lg transition text-base",
+              "rounded-lg transition text-base",
               "data-[state=active]:bg-white"
             )}
           >
@@ -128,54 +135,50 @@ function CheckPage() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="UC">
-          <Card className="bg-white/10 border-none text-primary-text">
-            <CardHeader>
-              <CardTitle className="text-lg">UC Orders</CardTitle>
-              <CardDescription className="text-secondary-text text-base">
-                Orders for product type 'UC'
-              </CardDescription>
-            </CardHeader>
-            <CardContent>{renderOrders(UCOrders, "UC")}</CardContent>
-          </Card>
+        <TabsContent value="UC" className="max-h-[80vh] overflow-y-auto p-2">
+          {UCOrders?.data?.length > 0 ? (
+            UCOrders?.data?.map((order: any) => (
+              <UCOrderCard key={order.id} order={order} />
+            ))
+          ) : (
+            <p>No UC orders found.</p>
+          )}
         </TabsContent>
 
-        <TabsContent value="STEAM">
-          <Card className="bg-white/10 border-none text-primary-text">
-            <CardHeader>
-              <CardTitle className="text-lg">STEAM Orders</CardTitle>
-              <CardDescription className="text-secondary-text text-base">
-                Orders for product type 'STEAM'
-              </CardDescription>
-            </CardHeader>
-            <CardContent>{renderOrders(STEAMOrders, "STEAM")}</CardContent>
-          </Card>
+        <TabsContent value="STEAM" className="max-h-[80vh] overflow-y-auto p-2">
+          {STEAMOrders?.data?.length > 0 ? (
+            STEAMOrders?.data?.map((order: any) => (
+              <SteamOrderCard key={order.id} order={order} />
+            ))
+          ) : (
+            <p>No Steam orders found.</p>
+          )}
         </TabsContent>
 
-        <TabsContent value="MOBILE_LEGENDS">
-          <Card className="bg-white/10 border-none text-primary-text">
-            <CardHeader>
-              <CardTitle className="text-lg">Mobile Legends Orders</CardTitle>
-              <CardDescription className="text-secondary-text text-base">
-                Orders for product type 'Mobile Legends'
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {renderOrders(MobileLegendsOrders, "Mobile Legends")}
-            </CardContent>
-          </Card>
+        <TabsContent
+          value="MOBILE_LEGENDS"
+          className="max-h-[80vh] overflow-y-auto p-2"
+        >
+          {MobileLegendsOrders?.data?.length > 0 ? (
+            MobileLegendsOrders?.data?.map((order: any) => (
+              <MobileLegendsOrderCard key={order.id} order={order} />
+            ))
+          ) : (
+            <p>No Mobile Legends orders found.</p>
+          )}
         </TabsContent>
 
-        <TabsContent value="PRODUCT">
-          <Card className="bg-white/10 border-none text-primary-text">
-            <CardHeader>
-              <CardTitle className="text-lg">Product Orders</CardTitle>
-              <CardDescription className="text-secondary-text text-base">
-                Orders for product type 'Product'
-              </CardDescription>
-            </CardHeader>
-            <CardContent>{renderOrders(ProductOrders, "Product")}</CardContent>
-          </Card>
+        <TabsContent
+          value="PRODUCT"
+          className="max-h-[80vh] overflow-y-auto p-2"
+        >
+          {ProductOrders?.data?.length > 0 ? (
+            ProductOrders?.data?.map((order: any) => (
+              <ProductOrderCard key={order.id} order={order} />
+            ))
+          ) : (
+            <p>No product orders found.</p>
+          )}
         </TabsContent>
       </Tabs>
     </div>
