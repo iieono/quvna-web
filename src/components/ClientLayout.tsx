@@ -11,12 +11,14 @@ import UserComponent from "./UserComponent";
 import Link from "next/link";
 import Image from "next/image";
 import { Toaster } from "./ui/toaster";
+import Navbar from "./Navbar";
 
 export default function ClientLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [navOpen, setNavOpen] = useState(false);
   const [language, setLanguage] = useState("uz");
   const router = useRouter();
   const text = "Quvna";
@@ -53,7 +55,16 @@ export default function ClientLayout({
   }, [pathname]);
   return (
     <Provider store={store}>
-      <body className="min-h-screen h-screen flex justify-between bg-white p-1 text-primary-text gap-1">
+      <body className="min-h-screen h-screen flex justify-between bg-white p-1 text-primary-text lg:gap-1">
+        <div
+          className="absolute flex lg:hidden flex-col top-2 right-6 justify-between items-end py-3 gap-1 z-50"
+          onClick={() => setNavOpen((prev) => !prev)}
+        >
+          <div className="w-8 bg-white h-2 rounded-full"></div>
+          <div className="w-5 bg-white h-1.5 rounded-full"></div>
+          <div className="w-6 bg-white h-1 rounded-full"></div>
+        </div>
+        {navOpen && <Navbar />}
         {!isMain && (
           <Link
             href="/home"

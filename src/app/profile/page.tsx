@@ -189,7 +189,7 @@ function Page() {
 
   return (
     <div className="w-full h-full overflow bg-primary-bg px-2 pt-28 lg:pt-10">
-      <div className="w-full h-full flex justify-center items-center pt-64 lg:pt-0  overflow-scroll">
+      <div className="w-full h-full flex justify-center items-center pt-80 lg:pt-0  overflow-scroll">
         <div className="flex flex-col w-full text-sm lg:w-2/3 rounded-3xl gap-3 p-3">
           <div className="rounded-xl gap-3 flex w-full justify-between">
             <div className="flex">
