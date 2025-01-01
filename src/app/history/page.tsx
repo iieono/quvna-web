@@ -96,11 +96,11 @@ function CheckPage() {
         defaultValue="UC"
         className="w-full overflow-hidden max-w-4xl mx-auto"
       >
-        <TabsList className="grid grid-cols-4 h-full text-xl bg-white/10 text-secondary-text gap-2">
+        <TabsList className="grid grid-cols-2 lg:grid-cols-4 h-full text-xl bg-white/10 text-secondary-text gap-2">
           <TabsTrigger
             value="UC"
             className={cn(
-              "rounded-lg transition text-xs lg:text-base",
+              "rounded-lg transition text-sm lg:text-base",
               "data-[state=active]:bg-white"
             )}
           >
@@ -109,7 +109,7 @@ function CheckPage() {
           <TabsTrigger
             value="STEAM"
             className={cn(
-              "rounded-lg transition text-xs lg:text-base",
+              "rounded-lg transition text-sm lg:text-base",
               "data-[state=active]:bg-white"
             )}
           >
@@ -118,7 +118,7 @@ function CheckPage() {
           <TabsTrigger
             value="MOBILE_LEGENDS"
             className={cn(
-              "rounded-lg transition text-xs lg:text-base",
+              "rounded-lg transition text-sm lg:text-base",
               "data-[state=active]:bg-white"
             )}
           >
@@ -127,7 +127,7 @@ function CheckPage() {
           <TabsTrigger
             value="PRODUCT"
             className={cn(
-              "rounded-lg transition text-xs lg:text-base",
+              "rounded-lg transition text-sm lg:text-base",
               "data-[state=active]:bg-white"
             )}
           >
