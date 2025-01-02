@@ -31,7 +31,7 @@ function MainAdvertisements() {
   }, [attachmentIds]);
 
   return (
-    <div className="w-full h-40 lg:h-96 relative rounded-3xl overflow-hidden">
+    <div className="w-full h-60 lg:h-96 relative rounded-3xl overflow-hidden">
       {isLoading ? (
         <p>Loading advertisements...</p>
       ) : error ? (
