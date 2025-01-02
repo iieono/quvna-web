@@ -91,7 +91,7 @@ function CheckPage() {
     );
 
   return (
-    <div className="bg-primary-bg p-2 lg:p-10 w-full h-full text-sm py-24">
+    <div className="bg-primary-bg p-2 lg:p-10 w-full h-full text-sm py-5">
       <Tabs
         defaultValue="UC"
         className="w-full overflow-hidden max-w-4xl mx-auto"

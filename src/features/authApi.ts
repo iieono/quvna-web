@@ -53,14 +53,23 @@ export const authApi = createApi({
         method: "DELETE",
       }),
     }),
-    sendSms: builder.query({
-      query: ({ phoneNumber, isForgot }) => ({
-        url: `/api/auth/sms?phoneNumber=${encodeURIComponent(
-          phoneNumber
-        )}&isForgot=${isForgot}`,
-        method: "GET",
-      }),
+    sendSms: builder.mutation({
+      query: ({ phoneNumber, isForgat }) => {
+        const phoneNumberWithoutSpaces = phoneNumber.replace(/\s+/g, "");
+
+        // Construct the query string with parameters
+        const urlParams = new URLSearchParams({
+          phoneNumber: phoneNumberWithoutSpaces,
+          isForgat: String(isForgat), // Convert boolean to string for URL
+        }).toString();
+
+        return {
+          url: `/api/auth/sms?${urlParams}`, // Append parameters to URL
+          method: "POST", // Keep as POST
+        };
+      },
     }),
+
     editUserProfile: builder.mutation({
       query: ({
         userId,
@@ -94,6 +103,6 @@ export const {
   useRegisterMutation,
   useGetUserProfileQuery,
   useDeleteUserAccountMutation,
-  useSendSmsQuery,
+  useSendSmsMutation,
   useEditUserProfileMutation,
 } = authApi;

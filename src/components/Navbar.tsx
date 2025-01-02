@@ -74,14 +74,14 @@ function UserComponent() {
         <div className="flex flex-col gap-5">
           <Link
             href="/profile"
-            className="rounded-3xl flex items-start gap-4  left-5 -top-5 border-white overflow-hidden"
+            className="rounded-xl flex items-center gap-4  left-5 -top-5 border-white overflow-hidden"
           >
-            <div className="relative w-[70px] h-[70px]">
+            <div className="relative w-[80px] h-[80px]">
               <Image
                 src={imageBlobUrl}
                 fill
                 alt="User profile image"
-                className={`object-cover rounded-3xl transition-opacity duration-300 ${
+                className={`object-cover rounded-xl transition-opacity duration-300 ${
                   imageLoaded ? "opacity-100" : "opacity-0"
                 }`}
                 onError={handleImageError}
@@ -96,6 +96,9 @@ function UserComponent() {
                 ID: {data?.data?.id.toString().padStart(8, "0")}
               </p>
             </div>
+            <Link href="/notifications" className="  ml-auto flex  p-2">
+              <Bell />
+            </Link>
           </Link>
           <div className="flex flex-col gap-4">
             <div className="flex gap-5 items-center justify-between">
@@ -106,6 +109,9 @@ function UserComponent() {
                 >
                   {`Rating ${data?.data?.rating?.id?.toString()} ★`}
                 </TextShimmer>
+              </div>
+              <div className="rounded-lg flex font-medium gap-2 text-center items-center text-sm text-white px-5 py-1 bg-white/10">
+                History
               </div>
             </div>
 
@@ -182,11 +188,34 @@ function UserComponent() {
             </div>
           </div>
         </div>
+
         <div className="h-full  w-full flex flex-col justify-end text-4xl font-clash-display font-semibold  gap-1 p-3">
+          <Link href="/home">Home</Link>
+          <Link href="/ratings">Ratings</Link>
           <Link href="/">Home</Link>
           <Link href="/">Home</Link>
-          <Link href="/">Home</Link>
-          <Link href="/">Home</Link>
+        </div>
+        <div className="flex absolute top-3 items-center pt-2 text-xs justify-center">
+          <div className="flex gap-3">
+            <Link
+              href="https://www.instagram.com/quvna_game"
+              className="rounded-full bg-white/10 p-1 px-3"
+            >
+              Instagram
+            </Link>
+            <Link
+              href="https://t.me/Quvnamarket"
+              className="rounded-full bg-white/10 p-1 px-3"
+            >
+              Telegram
+            </Link>
+            <Link
+              href="https://youtube.com/@dsd-group"
+              className="rounded-full bg-white/10 p-1 px-3"
+            >
+              Youtube
+            </Link>
+          </div>
         </div>
       </div>
     </div>

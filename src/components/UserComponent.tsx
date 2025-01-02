@@ -34,10 +34,9 @@ function UserComponent() {
       skip: !attachmentId,
     });
 
-  // Handle inline image response
   useEffect(() => {
     if (attachmentImage) {
-      // Create a blob URL directly from the attachment image
+      // If there is an attachment image, create a blob URL
       const blobUrl = URL.createObjectURL(attachmentImage);
       setImageBlobUrl(blobUrl);
       setImageLoaded(true);
@@ -48,9 +47,14 @@ function UserComponent() {
           URL.revokeObjectURL(blobUrl);
         }
       };
+    } else {
+      // Fallback to the default image if there's no attachment
+      setImageBlobUrl("/images/default-user.png");
+      setImageLoaded(true);
     }
   }, [attachmentImage]);
 
+  // Handle image loading errors
   const handleImageError = () => {
     setImageBlobUrl("/images/default-user.png");
     setImageLoaded(true);
@@ -58,14 +62,18 @@ function UserComponent() {
 
   if (isLoading) {
     return (
-      <div className="animate-pulse">
+      <div className="animate-pulse hidden lg:flex">
         <div className="w-[70px] h-[70px] bg-gray-200 rounded-tl-3xl rounded-br-3xl"></div>
       </div>
     );
   }
 
   if (error) {
-    return <div className="text-red-500">Error loading profile data</div>;
+    return (
+      <div className="text-red-500 hidden lg:flex">
+        Error loading profile data
+      </div>
+    );
   }
 
   return (

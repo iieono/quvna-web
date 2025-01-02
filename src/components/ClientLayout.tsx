@@ -12,6 +12,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Toaster } from "./ui/toaster";
 import Navbar from "./Navbar";
+import NavbarMain from "./NavbarMain";
 
 export default function ClientLayout({
   children,
@@ -53,100 +54,57 @@ export default function ClientLayout({
       stagger: 0.15, // Delay between each letter
     });
   }, [pathname]);
+  useEffect(() => {
+    setNavOpen(false);
+  }, [pathname]);
   return (
     <Provider store={store}>
-      <body className="min-h-screen h-screen flex justify-between bg-white p-1 text-primary-text lg:gap-1">
-        <div
+      <body className="min-h-screen h-screen flex flex-col bg-white p-1 text-primary-text lg:gap-1">
+        {/* <div
           className="absolute flex lg:hidden flex-col top-2 right-6 justify-between items-end py-3 gap-1 z-50"
           onClick={() => setNavOpen((prev) => !prev)}
         >
           <div className="w-8 bg-white h-2 rounded-full"></div>
           <div className="w-5 bg-white h-1.5 rounded-full"></div>
           <div className="w-6 bg-white h-1 rounded-full"></div>
-        </div>
+        </div> */}
         {navOpen && <Navbar />}
-        {!isMain && (
-          <Link
-            href="/home"
-            className="brand-text text-4xl cursor-pointer bg-white rounded-br-3xl  text-black font-semibold font-clash-display top-1 left-1 px-7 pr-6 py-1 absolute "
-          >
-            {text.split("").map((letter, index) => (
-              <span
-                key={index}
-                className="opacity-20 letter-main text-accent-blue"
-              >
-                {letter}
-              </span>
-            ))}
-            {/* <div className=" links-to-social absolute top-3 group gap-0 hover:gap-2 transition-all duration-300 flex flex-col  -right-12 z-20 text-white">
-              <div
-                className={`overflow-hidden ${
-                  language != "uz" ? "max-h-0" : ""
-                } group-hover:max-h-60 flex  transition-all duration-1000 ease-in-out`}
-                onClick={() => setLanguage("uz")}
-              >
-                <Image
-                  src="/images/uzbekistan-icon.png"
-                  alt="uzb icon"
-                  width={30}
-                  height={30}
-                />
-              </div>
-              <div
-                className={`overflow-hidden ${
-                  language != "ru" ? "max-h-0" : ""
-                } group-hover:max-h-60 transition-all duration-1000 ease-in-out`}
-                onClick={() => setLanguage("ru")}
-              >
-                <Image
-                  src="/images/russia-icon.png"
-                  alt="ru icon"
-                  width={30}
-                  height={30}
-                />
-              </div>
-            </div> */}
 
-            <div className="h-10 w-10 bg-white absolute -bottom-10 left-0">
-              <div className="absolute h-full w-full bg-primary-bg rounded-tl-3xl"></div>
+        {!isMain && <NavbarMain />}
+        <div className="w-full h-full rounded-3xl overflow-hidden">
+          {children}
+          {!isMain && (
+            <div className="hidden lg:flex brand-text text-base cursor-pointer bg-white rounded-tr-3xl  text-black font-semibold font-clash-display bottom-3 left-1 px-3 pl-4 py-2 absolute ">
+              <div className="flex gap-3">
+                <Link
+                  href="https://www.instagram.com/quvna_game"
+                  className="rounded-full bg-primary-bg/20 p-1 px-3"
+                >
+                  Instagram
+                </Link>
+                <Link
+                  href="https://t.me/Quvnamarket"
+                  className="rounded-full bg-primary-bg/20 p-1 px-3"
+                >
+                  Telegram
+                </Link>
+                <Link
+                  href="https://youtube.com/@dsd-group"
+                  className="rounded-full bg-primary-bg/20 p-1 px-3"
+                >
+                  Youtube
+                </Link>
+              </div>
+              <div className="h-10 w-10 bg-white absolute -top-10 left-0">
+                <div className="absolute h-full w-full bg-primary-bg rounded-bl-3xl"></div>
+              </div>
+              {/* <div className="h-10 w-10 bg-white absolute -right-10 bottom-0">
+                <div className="absolute h-full w-full bg-primary-bg rounded-bl-3xl"></div>
+              </div> */}
             </div>
-            <div className="h-10 w-10 bg-white absolute -right-10 top-0">
-              <div className="absolute h-full w-full bg-primary-bg rounded-tl-3xl"></div>
-            </div>
-          </Link>
-        )}
-        {!isLoginOrRegister && (
-          <div className="hidden lg:flex brand-text text-base cursor-pointer bg-white rounded-tr-3xl  text-black font-semibold font-clash-display bottom-1 left-1 px-3 pl-4 py-2 absolute ">
-            <div className="flex gap-3">
-              <Link
-                href="https://www.instagram.com/quvna_game"
-                className="rounded-full bg-primary-bg/20 p-1 px-3"
-              >
-                Instagram
-              </Link>
-              <Link
-                href="https://t.me/Quvnamarket"
-                className="rounded-full bg-primary-bg/20 p-1 px-3"
-              >
-                Telegram
-              </Link>
-              <Link
-                href="https://youtube.com/@dsd-group"
-                className="rounded-full bg-primary-bg/20 p-1 px-3"
-              >
-                Youtube
-              </Link>
-            </div>
-            <div className="h-10 w-10 bg-white absolute -top-10 left-0">
-              <div className="absolute h-full w-full bg-primary-bg rounded-bl-3xl"></div>
-            </div>
-            <div className="h-10 w-10 bg-white absolute -right-10 bottom-0">
-              <div className="absolute h-full w-full bg-primary-bg rounded-bl-3xl"></div>
-            </div>
-          </div>
-        )}
-        <div className="w-full rounded-3xl overflow-hidden">{children}</div>
-        {!isMain && <UserComponent />}
+          )}
+        </div>
+        {/* {!isMain && <UserComponent />} */}
         <Toaster />
       </body>
     </Provider>
