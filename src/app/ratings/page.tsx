@@ -23,7 +23,7 @@ interface RatingData {
   data: RatingItem[];
 }
 
-function RatingsTransitionPage() {
+const RatingsTransitionPage = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const {
@@ -159,6 +159,6 @@ function RatingsTransitionPage() {
       </div>
     </div>
   );
-}
+};
 
 export default RatingsTransitionPage;
