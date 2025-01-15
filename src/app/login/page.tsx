@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/authApi";
 import { useRouter } from "next/navigation";
-import { TextMorph } from "@/components/ui/text-morph";
-import { Instagram, Youtube } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { TextShimmer } from "@/components/ui/text-shimmer";
