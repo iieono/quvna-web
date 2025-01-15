@@ -1,4 +1,5 @@
 import MainAdvertisements from "@/components/MainAdvertisements";
+import Image from "next/image";
 import React from "react";
 
 function page() {
@@ -20,14 +21,18 @@ function page() {
             <div className="lg:col-span-2">
               <MainAdvertisements />
             </div>
-            <div className="border border-white/20 rounded-3xl w-full h-full text-6xl font-satoshi text-white">
-              {" "}
-              shop
+            <div className="relative border border-white/20 rounded-3xl w-full h-full text-6xl font-satoshi text-white">
+              <Image
+                src="/images/shop-bg.jpg"
+                fill
+                alt="shop"
+                className="rounded-3xl"
+              />
             </div>
           </div>
         </div>
-        <div className="h-screen w-full  text-6xl flex items-center justify-center">
-          Shop
+        <div className="h-screen w-full text-6xl flex items-center relative justify-center">
+          games here
         </div>
       </div>
     </div>
