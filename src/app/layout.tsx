@@ -21,8 +21,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/quvna.png" type="image/png" />
       </head>
-
-      <ClientLayout>{children}</ClientLayout>
+      <body>{children}</body>
     </html>
   );
 }

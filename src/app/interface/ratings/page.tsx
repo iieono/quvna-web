@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { TransitionPanel } from "../../components/ui/transition-panel";
+import { TransitionPanel } from "../../../components/ui/transition-panel";
 import {
   useGetFiftyAllMLQuery,
   useGetFiftyAllSteamQuery,

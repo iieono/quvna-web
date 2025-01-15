@@ -92,3 +92,10 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.navbar-container > *{
+  @apply hover:text-main-blue cursor-pointer  transition-all duration-300
+}
+.navbar-link-container >div{
+  @apply cursor-pointer
+}

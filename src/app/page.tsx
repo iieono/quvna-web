@@ -12,15 +12,7 @@ export default function Home() {
     const timeline = gsap.timeline({
       onComplete: () => {
         gsap.delayedCall(1, () => {
-          // Check if 'window' is defined (client-side environment)
-          if (typeof window !== "undefined") {
-            const token = localStorage.getItem("token");
-            if (!token) {
-              router.push("/login");
-            } else {
-              router.push("/home");
-            }
-          }
+          router.push("/interface");
         });
       },
     });
@@ -60,7 +52,7 @@ export default function Home() {
   const text = "Quvna";
 
   return (
-    <div className="rounded-xl relative overflow-hidden h-full w-full flex flex-col bg-white text-white items-center justify-center p-8">
+    <div className=" relative overflow-hidden h-screen w-full flex flex-col bg-white text-white items-center justify-center p-8">
       <div className="loading-bg rounded-tl-[2000px]  rounded-tr-[2000px] translate-y-full h-full w-full bg-primary-bg absolute"></div>
       <div className="loading-text font-clash-display gap-1 absolute font-bold tracking-loose text-6xl lg:text-9xl text-white flex">
         {text.split("").map((letter, index) => (

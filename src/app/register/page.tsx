@@ -1,14 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  useRegisterMutation,
-  useSendSmsMutation,
-} from "../../features/authApi"; // your register mutation hook
+
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import Image from "next/image";
 import Link from "next/link";
 import { useGetPrivacyPolicyQuery } from "@/features/extrasApi";
+import { useRegisterMutation, useSendSmsMutation } from "@/features/authApi";
 
 function RegisterPage() {
   const router = useRouter();
