@@ -11,9 +11,8 @@ function page() {
       <div className="w-full lg:w-10/12 z-10">
         <div className="h-[73vh] w-full flex flex-col gap-10 lg:gap-20 items-center pt-20 p-3 lg:p-0 lg:pt-48 ">
           <div className="text-primary-text lg:w-2/3 flex flex-col gap-2 lg:gap-5 text-center font-clash-display text-5xl lg:text-7xl">
-            <div className="">
-              <span className="">Unlock the gear you need</span> <br />
-              to dominate the game
+            <div className="text-balance">
+              Unlock the gear you need to dominate the game
             </div>
             <div className="text-sm lg:text-xl font-satoshi text-secondary-text">
               Explore our collection of must-have gaming items!
@@ -47,7 +46,7 @@ function page() {
           id="items"
           className="h-screen w-full text-6xl flex items-center relative justify-center"
         >
-          <div className="w-full h-1/2 text-primary-text grid grid-cols-3 gap-2">
+          <div className="w-full h-1/2 text-primary-text p-2 grid grid-cols-1 grid-rows-3 lg:grid-cols-3 lg:grid-rows-1 gap-2">
             <div className="w-full h-full rounded-3xl border border-white/20 p-3">
               pubg
             </div>
