@@ -2,8 +2,9 @@ import React from "react";
 
 function Footer() {
   return (
-    <div className="w-full pb-6 bg-primary-bg flex  text-white justify-center">
-      <div></div>
+    <div className="w-full  pb-6 bg-primary-bg flex  text-white justify-center relative">
+      <div className="w-2/3  h-20 bg-main-blue/60 blur-3xl rotate-6 left-0 top-1/3 absolute"></div>
+      <div className="w-2/3  h-20 bg-white/40 blur-3xl rotate-6 left-0 top-0 absolute"></div>
       <div className="w-full lg:w-10/12 flex flex-col gap-5">
         <div className="flex flex-col lg:flex-row px-2 gap-10 justify-between py-5">
           <div className="flex flex-col gap-2 font-bold">
