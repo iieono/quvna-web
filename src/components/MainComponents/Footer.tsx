@@ -1,0 +1,37 @@
+import React from "react";
+
+function Footer() {
+  return (
+    <div className="w-full pb-6 bg-primary-bg flex  text-white justify-center">
+      <div className="w-full lg:w-10/12 flex flex-col gap-5">
+        <div className="flex justify-between py-5">
+          <div className="flex flex-col gap-2 font-bold">
+            <div className="text-6xl font-clash-display tracking-wider">
+              Quvna
+            </div>
+            <div className="text-secondary-text opacity-60">C Quvna, 2025</div>
+            <div className=" text-secondary-text mt-2">Support</div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <div className="font-bold text-xl text-secondary-text">
+              Follow us on socials:
+            </div>
+            <div className="flex gap-2">
+              <div className="h-20 w-20 bg-white"></div>
+              <div className="h-20 w-20 bg-white"></div>
+              <div className="h-20 w-20 bg-white"></div>
+              <div className="h-20 w-20 bg-white"></div>
+            </div>
+          </div>
+        </div>
+        <div className="w-full bg-white/10 h-[1px]"></div>
+        <div className="w-full flex justify-between">
+          <div>location</div>
+          <div>links</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Footer;

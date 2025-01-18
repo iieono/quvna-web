@@ -7,8 +7,11 @@ import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import LoginManager from "./LoginManager";
 import RegisterManager from "./RegisterManager";
+import { IoHelpCircleOutline } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 function NavbarMain() {
+  const router = useRouter();
   const [userId, setUserId] = useState<string | null>(null);
 
   const [loginManager, setLoginManager] = useState("login");
@@ -26,10 +29,28 @@ function NavbarMain() {
     <div className="fixed  backdrop-blur-lg w-full z-40 border-b hidden lg:flex items-center justify-center border-white/20">
       <div className="w-full lg:w-10/12 text-primary-text h-full gap-3 flex flex-col justify-between items-center p-3 pb-4 ">
         <div className="flex w-full justify-end gap-5 navbar-link-container  text-sm items-center px-1 text-secondary-text">
-          <div className="relative">Discord</div>
-          <div className="relative">Youtube</div>
-          <div className="relative">Instagram</div>
-          <div className="relative">Telegram</div>
+          <Link href="" className="relative">
+            Discord
+          </Link>
+          <Link href="https://youtube.com/@dsd-group" className="relative">
+            Youtube
+          </Link>
+          <Link
+            href="https://www.instagram.com/quvna_game"
+            className="relative"
+          >
+            Instagram
+          </Link>
+          <Link href="https://t.me/Quvnamarket" className="relative">
+            Telegram
+          </Link>
+          <Link
+            href="https://t.me/Quvnamarket"
+            className="relative flex items-center  gap-1 text-primary-text"
+          >
+            <IoHelpCircleOutline className="text-xl -mb-0.5" />
+            Support
+          </Link>
         </div>
         <div className="hidden lg:flex  justify-between w-full  ">
           <Link

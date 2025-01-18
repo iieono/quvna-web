@@ -1,5 +1,6 @@
 "use client";
 import GameTapbar from "@/components/GameTapbar";
+import Footer from "@/components/MainComponents/Footer";
 import NavbarMain from "@/components/NavbarMain";
 import NavbarMobile from "@/components/NavbarMobile";
 import NavbarSecondary from "@/components/NavbarSecondary";
@@ -15,6 +16,7 @@ function layout({ children }: { children: React.ReactNode }) {
         <NavbarMobile />
         {/* <NavbarSecondary /> */}
         {children}
+        <Footer />
         <GameTapbar />
       </div>
     </Provider>

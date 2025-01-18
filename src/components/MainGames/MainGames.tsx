@@ -16,12 +16,12 @@ const MainGames: React.FC = () => {
     },
     {
       imageSrc: "/images/steam-bg.png",
-      label: "UC",
+      label: "Balance",
       title: "Steam",
     },
     {
       imageSrc: "/images/ml-bg.jpg",
-      label: "UC",
+      label: "Diamonds",
       title: "Mobile Legends",
     },
   ];
