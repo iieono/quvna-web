@@ -20,8 +20,8 @@ function page() {
           </div>
           {/* <div className="w-20 h-20 blur-xl rounded-full bg-main-blue"></div> */}
         </div>
-        <div className="w-full mb-20">
-          <div className="w-full grid grid-rows-2 lg:grid-rows-1 grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="w-full mb-10 p-2 ">
+          <div className="w-full grid grid-rows-2 lg:grid-rows-1 grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-5">
             <div className="lg:col-span-2">
               <MainAdvertisements />
             </div>
@@ -32,7 +32,7 @@ function page() {
                 alt="shop"
                 className="rounded-3xl object-cover"
               />
-              <div className="absolute  w-full bottom-0 left-0 bg-black/40 backdrop-blur-sm p-5">
+              <div className="absolute  w-full bottom-0 left-0 bg-black/40 backdrop-blur-sm p-2 lg:p-5">
                 <div className="h-5 absolute -top-2.5 blur-sm left-0 bg-white/40 w-full"></div>
                 <p className="text-4xl font-bold font-clash-display">
                   Upgrade Your Tech
