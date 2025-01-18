@@ -3,8 +3,9 @@ import React from "react";
 function Footer() {
   return (
     <div className="w-full pb-6 bg-primary-bg flex  text-white justify-center">
+      <div></div>
       <div className="w-full lg:w-10/12 flex flex-col gap-5">
-        <div className="flex justify-between py-5">
+        <div className="flex flex-col lg:flex-row px-2 gap-10 justify-between py-5">
           <div className="flex flex-col gap-2 font-bold">
             <div className="text-6xl font-clash-display tracking-wider">
               Quvna
@@ -17,16 +18,18 @@ function Footer() {
               Follow us on socials:
             </div>
             <div className="flex gap-2">
-              <div className="h-20 w-20 bg-white"></div>
-              <div className="h-20 w-20 bg-white"></div>
-              <div className="h-20 w-20 bg-white"></div>
-              <div className="h-20 w-20 bg-white"></div>
+              <div className="h-16 w-16  bg-white"></div>
+              <div className="h-16 w-16  bg-white"></div>
+              <div className="h-16 w-16  bg-white"></div>
+              <div className="h-16 w-16  bg-white"></div>
             </div>
           </div>
         </div>
         <div className="w-full bg-white/10 h-[1px]"></div>
-        <div className="w-full flex justify-between">
-          <div>location</div>
+        <div className="w-full flex justify-between flex-col lg:flex-row gap-3 px-2">
+          <div className="text-secondary-text opacity-60">
+            Tashkent, Uzbekistan
+          </div>
           <div>links</div>
         </div>
       </div>
