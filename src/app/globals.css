@@ -14,6 +14,10 @@ body {
   margin: 0;
   box-sizing: border-box;
   font-family: Satoshi, Helvetica, sans-serif;
+
+}
+*{
+  scroll-behavior: smooth;
 }
 
 .page-container {
@@ -93,9 +97,35 @@ body {
   display: none;
 }
 
-.navbar-container > *{
-  @apply hover:text-main-blue cursor-pointer  transition-all duration-300
+.navbar-container > .main-nav-item{
+  @apply cursor-pointer  transition-all duration-300 tracking-wider font-semibold relative
 }
-.navbar-link-container >div{
+.navbar-container > .main-nav-item::after{
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 1px; 
+  bottom: -1px;
+  left: 0;
+  transition: all 0.5s ease;
+  background-color: white;
+}
+.navbar-container > .main-nav-item:hover::after{
+  width: 100%;
+}
+.navbar-link-container > div{
   @apply cursor-pointer
+}
+.animate-spin-custom {
+  animation: customSpin 10s linear infinite;
+}
+
+@keyframes customSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(359deg);
+  }
 }

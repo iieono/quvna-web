@@ -10,7 +10,7 @@ import RegisterManager from "./RegisterManager";
 
 function NavbarMain() {
   const [userId, setUserId] = useState<string | null>(null);
-  const [navOpen, setNavOpen] = useState(false);
+
   const [loginManager, setLoginManager] = useState("login");
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -23,50 +23,72 @@ function NavbarMain() {
     skip: !userId,
   });
   return (
-    <div className="fixed  backdrop-blur-lg w-full z-40 border-b flex items-center justify-center border-white/20">
-      <div
-        className={`lg:hidden  fixed  flex flex-col gap-5 transition-all duration-1000 ease-[cubic-bezier(1,-0.4,0.35,0.95)] overflow-hidden top-14 translate-y-1 w-full bg-white ${
-          navOpen ? " max-h-screen p-5" : "max-h-0 p-0"
-        }`}
-      >
-        <div className="flex flex-col font-bold navbar-container justify-start items-start gap-3 text-3xl">
-          <div>Store</div>
-          <div>Shop</div>
-          <div>Tournaments</div>
-          <div>Leaderboard</div>
-          <div>Cart</div>
-          <div>Profile</div>
+    <div className="fixed  backdrop-blur-lg w-full z-40 border-b hidden lg:flex items-center justify-center border-white/20">
+      <div className="w-full lg:w-10/12 text-primary-text h-full gap-3 flex flex-col justify-between items-center p-3 pb-4 ">
+        <div className="flex w-full justify-end gap-5 navbar-link-container  text-sm items-center px-1 text-secondary-text">
+          <div className="relative">Discord</div>
+          <div className="relative">Youtube</div>
+          <div className="relative">Instagram</div>
+          <div className="relative">Telegram</div>
         </div>
-        <div className="w-full flex justify-end gap-5 items-center text-lg">
-          <div>
-            <BellIcon />
-          </div>
-          <div className="text-primary-text px-4 py-1 bg-black rounded-full">
-            Uz
-          </div>
-        </div>
-      </div>
-      <div className="w-full lg:w-10/12 text-primary-text h-full  flex justify-between items-center p-3 lg:p-5 ">
-        <div className="font-clash-display text-3xl lg:text-5xl font-bold">
-          Quvna
-        </div>
-        <div
-          className="lg:hidden relative"
-          onClick={() => setNavOpen((prev) => !prev)}
-        >
-          <Menu />
-        </div>
-        <div className="hidden lg:flex flex-col gap-3">
-          <div className="flex justify-end gap-5 navbar-link-container text-sm items-center text-secondary-text">
-            <div className="relative">Discord</div>
-            <div className="relative">Youtube</div>
-            <div className="relative">Instagram</div>
-            <div className="relative">Telegram</div>
+        <div className="hidden lg:flex  justify-between w-full  ">
+          <Link
+            href="/interface"
+            className="font-clash-display text-3xl lg:text-5xl font-bold"
+          >
+            Quvna
+          </Link>
+          <div className="flex navbar-container items-center gap-6 text-lg">
+            <Link
+              href="/interface#items"
+              className="group main-nav-item relative "
+            >
+              Store
+              <div className="absolute rounded-3xl overflow-hidden p-0 group-hover:p-5 group-hover:text-primary-bg flex flex-col text-lg font-bold gap-2 bg-white/80 backdrop-blur-sm w-60 -right-4 -bottom-40 h-40 max-h-0 group-hover:max-h-40 duration-500 transition-all">
+                <Link
+                  href="/interface/pubg"
+                  className="hover:text-primary-text px-2 py-1 hover:bg-primary-bg rounded-lg"
+                >
+                  Pubg
+                </Link>
+                <Link
+                  href="/interface/steam"
+                  className="hover:text-primary-text px-2 py-1 hover:bg-primary-bg rounded-lg"
+                >
+                  Steam
+                </Link>
+                <Link
+                  href="/interface/ml"
+                  className="hover:text-primary-text px-2 py-1 hover:bg-primary-bg rounded-lg"
+                >
+                  Mobile Legends
+                </Link>
+              </div>
+            </Link>
+            <Link className="main-nav-item" href="/interface/shop">
+              Shop
+            </Link>
+            <Link className="main-nav-item" href="/interface/tournament">
+              Tournament
+            </Link>
+            <Link className="main-nav-item" href="/interface/ratings">
+              Ratings
+            </Link>
+            {data?.data?.id && !isLoading && (
+              <Link className="main-nav-item" href="/interface/cart">
+                Cart
+              </Link>
+            )}
+            {data?.data?.id && !isLoading && (
+              <Link className="main-nav-item" href="/interface/profile">
+                Profile
+              </Link>
+            )}
             {!data?.data?.id && !isLoading && (
               <Dialog>
                 <DialogTrigger asChild>
-                  <div className="px-6 py-1 rounded-full text-primary-text hover:text-main-blue transition-all cursor-pointer duration-300 bg-black flex items-center justify-center">
-                    <p>Login</p>
+                  <div className="px-5 font-bold  rounded-xl border border-white/40 text-white pb-0.5  bg-main-blue transition-all cursor-pointer duration-300   flex items-center justify-center">
+                    <p className="">Login</p>
                   </div>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[500px] p-0 flex items-center flex-col gap-0 pb-5">
@@ -101,22 +123,10 @@ function NavbarMain() {
               </Dialog>
             )}
             {data?.data?.id && !isLoading && (
-              <div className="px-6 py-1 rounded-full text-primary-text bg-black flex gap-3 items-center justify-center">
+              <div className="px-6 py-1 rounded-xl cursor-pointer text-primary-text bg-black flex gap-3 items-center justify-center">
                 <p>Get App</p>
                 <ArrowDownToLine size={17} className="text-main-blue " />
               </div>
-            )}
-          </div>
-          <div className="flex navbar-container items-center gap-10 text-lg px-2">
-            <Link href="/interface">Store</Link>
-            <Link href="/interface/shop">Shop</Link>
-            <Link href="/interface/torunament">Tournament</Link>
-            <Link href="/interface/ratings">Ratings</Link>
-            {data?.data?.id && !isLoading && (
-              <Link href="/interface/cart">Cart</Link>
-            )}
-            {data?.data?.id && !isLoading && (
-              <Link href="/interface/profile">Profile</Link>
             )}
           </div>
         </div>

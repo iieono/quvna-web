@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useGetAdvertisementsQuery } from "@/features/extrasApi";
-import { useGetAttachmentQuery } from "@/features/ratingApi";
 
 function MainAdvertisements() {
   const { data, error, isLoading } = useGetAdvertisementsQuery("HOME_PAGE");
   const [attachmentIds, setAttachmentIds] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (data?.data?.length > 0) {
@@ -21,88 +21,56 @@ function MainAdvertisements() {
   useEffect(() => {
     if (attachmentIds.length > 0) {
       const intervalId = setInterval(() => {
-        setCurrentIndex((prevIndex) =>
-          prevIndex === attachmentIds.length - 1 ? 0 : prevIndex + 1
-        );
+        const newIndex =
+          currentIndex === attachmentIds.length - 1 ? 0 : currentIndex + 1;
+        setNextIndex(newIndex); // Prepare the next advertisement
+
+        setTimeout(() => {
+          setCurrentIndex(newIndex); // Update the current advertisement
+          setNextIndex(null); // Reset the next advertisement
+        }, 0); // Instantly switch after update
       }, 3000); // Change slide every 3 seconds
 
       return () => clearInterval(intervalId); // Cleanup on component unmount
     }
-  }, [attachmentIds]);
+  }, [attachmentIds, currentIndex]);
 
   return (
     <div className="w-full h-60 lg:h-96 relative rounded-3xl overflow-hidden">
-      {isLoading ? (
-        <p>Loading advertisements...</p>
-      ) : error ? (
-        <p>Error loading advertisements.</p>
-      ) : (
-        attachmentIds?.length > 0 && (
-          <Advertisement id={attachmentIds[currentIndex]} />
-        )
+      {/* Current advertisement */}
+      <Advertisement id={attachmentIds[currentIndex]} isActive />
+      {/* Next advertisement appearing */}
+      {nextIndex !== null && (
+        <Advertisement id={attachmentIds[nextIndex]} isActive={false} />
       )}
     </div>
   );
 }
 
-function Advertisement({ id }: { id: any }) {
+function Advertisement({ id, isActive }: { id: string; isActive: boolean }) {
+  const imageUrl = `https://quvna.dominantsoftdevelopment.uz/attachment/${id}?view=inline`;
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageBlobUrl, setImageBlobUrl] = useState<string>(
-    "/images/default-user.png"
-  );
 
-  const { data: attachmentImage, error, isLoading } = useGetAttachmentQuery(id);
-
-  useEffect(() => {
-    if (attachmentImage) {
-      const blobUrl = URL.createObjectURL(attachmentImage);
-      setImageBlobUrl(blobUrl);
-      setImageLoaded(true);
-
-      // Cleanup the URL when the component unmounts
-      return () => {
-        if (blobUrl.startsWith("blob:")) {
-          URL.revokeObjectURL(blobUrl);
-        }
-      };
-    } else {
-      // Fallback to the default image if there's no attachment
-      setImageBlobUrl("/images/default-user.png");
-      setImageLoaded(true);
-    }
-  }, [attachmentImage]);
-
-  const handleImageError = () => {
-    setImageBlobUrl("/images/default-user.png");
-    setImageLoaded(true);
-  };
-
-  if (isLoading) {
-    return (
-      <div className="animate-pulse hidden lg:flex">
-        <div className="w-[70px] h-[70px] bg-gray-200 rounded-tl-3xl rounded-br-3xl"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-red-500 hidden lg:flex">
-        Error loading profile data
-      </div>
-    );
-  }
+  const handleImageError = () => setImageLoaded(false);
 
   return (
-    <div className="w-full h-60 lg:h-96 rounded-3xl bg-white/10 flex items-center justify-center overflow-hidden">
+    <div
+      className={`absolute w-full h-60 lg:h-96 rounded-3xl bg-white/10 flex items-center justify-center overflow-hidden ${
+        isActive ? "z-10 translate-y-0" : "z-20 translate-y-full"
+      }`}
+    >
+      {!imageLoaded && (
+        <div className="absolute inset-0 animate-pulse bg-white/10"></div>
+      )}
       <Image
-        src={imageBlobUrl}
+        src={imageUrl}
         fill
         alt="Advertisement image"
-        className={`object-cover transition-opacity duration-300 ${
+        className={`object-cover transition-transform duration-500 ${
           imageLoaded ? "opacity-100" : "opacity-0"
         }`}
         onError={handleImageError}
+        onLoadingComplete={() => setImageLoaded(true)}
         unoptimized
       />
     </div>
