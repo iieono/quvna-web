@@ -73,6 +73,9 @@ function Advertisement({ id, isActive }: { id: string; isActive: boolean }) {
         onLoadingComplete={() => setImageLoaded(true)}
         unoptimized
       />
+      <div className="absolute top-3 left-3 text-xl text-white bg-black/10 backdrop-blur-lg rounded-xl px-4 font-clash-display tracking-wider font-semibold">
+        Discover
+      </div>
     </div>
   );
 }
