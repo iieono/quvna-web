@@ -5,7 +5,7 @@ import React, { useState } from "react";
 function NavbarMobile() {
   const [navOpen, setNavOpen] = useState(false);
   return (
-    <div className="fixed h-12 text-white backdrop-blur-lg w-full z-40 border-b flex lg:hidden items-center justify-between border-white/20">
+    <div className="fixed h-12 text-white backdrop-blur-lg w-screen z-40 border-b flex lg:hidden items-center justify-between border-white/20">
       <div
         className={`lg:hidden  fixed  flex flex-col gap-5 transition-all duration-1000 ease-[cubic-bezier(1,-0.4,0.35,0.95)] overflow-hidden top-12 w-full bg-white ${
           navOpen ? " max-h-screen p-5" : "max-h-0 p-0"
